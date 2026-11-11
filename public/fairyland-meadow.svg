@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="}II0">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9fd8f4"/>
+      <stop offset="42%" stop-color="#d7eef8"/>
+      <stop offset="72%" stop-color="#f7f1dc"/>
+      <stop offset="100%" stop-color="#e6f0c9"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="78%" cy="18%" r="42%">
+      <stop offset="0%" stop-color="#fff7c8" stop-opacity="1"/>
+      <stop offset="28%" stop-color="#ffe58a" stop-opacity=".85"/>
+      <stop offset="58%" stop-color="#f3c45a" stop-opacity=".28"/>
+      <stop offset="100%" stop-color="#f3c45a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="sunCore" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fffdf2"/>
+      <stop offset="55%" stop-color="#ffe27a"/>
+      <stop offset="100%" stop-color="#f0b53a"/>
+    </radialGradient>
+    <linearGradient id="hillFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8fbf6a"/>
+      <stop offset="100%" stop-color="#6ea052"/>
+    </linearGradient>
+    <linearGradient id="hillMid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7eb35a"/>
+      <stop offset="100%" stop-color="#4f8a3e"/>
+    </linearGradient>
+    <linearGradient id="hillNear" x1="0" y1="0" x2=".4" y2="1">
+      <stop offset="0%" stop-color="#6aa84a"/>
+      <stop offset="100%" stop-color="#3f7d4e"/>
+    </linearGradient>
+    <linearGradient id="path" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f3e2b0"/>
+      <stop offset="100%" stop-color="#e0c88a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1240" cy="170" r="340" fill="url(#sunGlow)"/>
+  <circle cx="1240" cy="170" r="92" fill="url(#sunCore)"/>
+  <g fill="#ffffff" opacity=".72">
+    <ellipse cx="280" cy="150" rx="90" ry="28"/>
+    <ellipse cx="340" cy="138" rx="70" ry="24"/>
+    <ellipse cx="390" cy="156" rx="80" ry="22"/>
+    <ellipse cx="620" cy="110" rx="70" ry="20"/>
+    <ellipse cx="670" cy="102" rx="50" ry="16"/>
+  </g>
+  <path d="M0 470 C180 430 320 500 520 460 C740 416 900 500 1120 450 C1280 414 1460 470 1600 430 L1600 900 L0 900 Z" fill="url(#hillFar)" opacity=".9"/>
+  <path d="M0 560 C220 510 420 600 680 540 C920 486 1120 590 1380 530 C1480 510 1560 540 1600 520 L1600 900 L0 900 Z" fill="url(#hillMid)"/>
+  <path d="M620 620 C780 580 900 700 1060 640 C1240 572 1400 700 1600 640 L1600 900 L520 900 Z" fill="#4e8d44"/>
+  <path d="M540 640 C760 700 840 560 980 900 L540 900 Z" fill="url(#path)" opacity=".85"/>
+  <path d="M0 640 C260 600 480 720 760 650 C1040 580 1280 740 1600 680 L1600 900 L0 900 Z" fill="url(#hillNear)"/>
+  <g opacity=".35" stroke="#2f6a3c" stroke-width="2" fill="none">
+    <path d="M80 780 q8 -40 2 -78"/>
+    <path d="M140 800 q-10 -50 6 -90"/>
+    <path d="M220 760 q12 -36 0 -70"/>
+    <path d="M1180 790 q8 -44 -4 -86"/>
+    <path d="M1280 820 q-12 -48 8 -92"/>
+    <path d="M1480 770 q10 -40 0 -76"/>
+  </g>
+  <g>
+    <circle cx="180" cy="720" r="5" fill="#f4d35e"/>
+    <circle cx="210" cy="736" r="4" fill="#fff8e6"/>
+    <circle cx="340" cy="700" r="5" fill="#f7c14a"/>
+    <circle cx="410" cy="748" r="4" fill="#ffe9a8"/>
+    <circle cx="980" cy="710" r="5" fill="#fff4cc"/>
+    <circle cx="1040" cy="744" r="4" fill="#f0b53a"/>
+    <circle cx="1320" cy="700" r="5" fill="#ffe27a"/>
+    <circle cx="1410" cy="736" r="4" fill="#fff8e6"/>
+  </g>
+</svg>

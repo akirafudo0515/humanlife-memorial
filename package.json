@@ -1,0 +1,12 @@
+{
+  "name": "humanlife-memorial",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "multer": "^2.4.0",
+    "nodemailer": "^10.1.0"
+  }
+}

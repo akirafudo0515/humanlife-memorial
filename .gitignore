@@ -1,0 +1,11 @@
+node_modules/
+data/*.db
+data/*.db-*
+data/admin.local.txt
+data/mail.local.json
+data/outbox/
+data/smsbox/
+uploads/
+.env
+.env.*
+*.log

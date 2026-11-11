@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人本生命禮儀線上祭祀平台｜網站企劃書暨系統規格說明書</title>
+<style>
+  :root {
+    --ink: #241c16;
+    --muted: #5e564c;
+    --line: #d4ccc0;
+    --paper: #fbf8f3;
+    --accent: #6d5830;
+    --soft: #f3eee6;
+    --head: #1d1814;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: #e7e1d8;
+    font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .sheet { max-width: 1080px; margin: 28px auto; background: var(--paper); padding: 56px 60px 80px; }
+  h1, h2, h3, h4 { color: var(--head); line-height: 1.35; font-weight: 600; }
+  h1 { font-size: 32px; margin: 10px 0 8px; }
+  h2 { font-size: 22px; margin: 46px 0 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+  h3 { font-size: 17px; margin: 26px 0 8px; }
+  h4 { font-size: 15px; margin: 16px 0 6px; }
+  p { margin: 8px 0 12px; }
+  a { color: var(--accent); text-decoration: none; }
+  .kicker { color: var(--accent); letter-spacing: 0.14em; font-size: 12px; margin: 0; }
+  .sub { font-size: 18px; color: var(--muted); margin-top: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: 13px; line-height: 1.5; }
+  th, td { border: 1px solid var(--line); padding: 6px 8px; vertical-align: top; text-align: left; }
+  th { background: var(--soft); font-weight: 600; }
+  .meta th { width: 28%; background: transparent; color: var(--muted); font-weight: 500; }
+  .id { font-family: Consolas, "Courier New", monospace; white-space: nowrap; }
+  ul, ol { margin: 6px 0 14px; padding-left: 1.25em; }
+  li { margin: 3px 0; }
+  .note { background: var(--soft); border-left: 3px solid var(--accent); padding: 10px 14px; margin: 12px 0 18px; }
+  .small { color: var(--muted); font-size: 13px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .tree, .tree ul { list-style: none; margin: 0; padding-left: 0; }
+  .tree ul { padding-left: 16px; }
+  .tree li { margin: 5px 0; padding-left: 12px; border-left: 1px solid var(--line); }
+  .box { display: inline-block; border: 1px solid var(--ink); background: #fff; padding: 3px 8px; font-size: 13px; }
+  .box em { font-style: normal; color: var(--muted); font-size: 12px; }
+  .wf { border: 1px solid var(--ink); background: #fff; margin: 8px 0 22px; padding: 8px; }
+  .wf-h, .wf-b, .wf-s { border: 1px dashed #8d8478; padding: 8px; margin-bottom: 8px; font-size: 12px; color: #3c342c; min-height: 28px; }
+  .wf-row { display: grid; gap: 8px; }
+  .c2 { grid-template-columns: 1.15fr .85fr; }
+  .c3 { grid-template-columns: 1fr 1fr 1fr; }
+  .tall { min-height: 72px; }
+  .gantt { display: grid; grid-template-columns: 250px repeat(6, 1fr); gap: 7px 8px; align-items: center; margin: 12px 0 18px; }
+  .gh { font-size: 12px; color: var(--muted); text-align: center; }
+  .bar { height: 16px; background: var(--accent); }
+  .w1 { grid-column: 2; } .w2 { grid-column: 3; } .w3 { grid-column: 4; }
+  .w4 { grid-column: 5; } .w5 { grid-column: 6; } .w6 { grid-column: 7; }
+  .sig td { height: 84px; width: 50%; }
+  @media (max-width: 800px) {
+    .sheet { margin: 0; padding: 24px 16px 48px; }
+    .cols, .c2, .c3 { grid-template-columns: 1fr; }
+    .gantt { grid-template-columns: 1fr; }
+    .bar, .w1, .w2, .w3, .w4, .w5, .w6 { grid-column: auto; }
+    h1 { font-size: 26px; }
+  }
+  @media print {
+    body { background: #fff; }
+    .sheet { margin: 0; max-width: none; padding: 0; }
+    h2, h3 { break-after: avoid; }
+    table, .wf, .note { break-inside: avoid; }
+    a { color: inherit; }
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+
+<section>
+  <p class="kicker">WEBSITE PROPOSAL · SRS · PHASE 1</p>
+  <h1>人本生命禮儀線上祭祀平台<br>網站企劃書暨系統規格說明書</h1>
+  <p class="sub">第一期。本文件同時作為網站企劃書與系統規格說明書。驗收只對本文件已編號的條目。</p>
+  <table class="meta">
+    <tr><th>文件編號</th><td>HL-MEM-P1-20261010</td></tr>
+    <tr><th>版本</th><td>1.1</td></tr>
+    <tr><th>日期</th><td>2026 年 10 月 10 日</td></tr>
+    <tr><th>文件性質</th><td>網站架構、前後台功能規格、線框、資料庫、時程與驗收基準</td></tr>
+    <tr><th>原型依據</th><td>https://1-0.tw/DEMO/demo01/ 六個頁面，以及委託端補充之時光膠囊、自製／平台影片與相簿</td></tr>
+    <tr><th>效力</th><td>確認後，未出現在第二章規格表的功能不施工、不驗收、不計入本期時程</td></tr>
+  </table>
+</section>
+
+<h2>修訂紀錄</h2>
+<table>
+  <thead><tr><th>版本</th><th>日期</th><th>說明</th></tr></thead>
+  <tbody>
+    <tr><td>1.0</td><td>2026-10-10</td><td>第一期範圍、功能編號與連動規則。</td></tr>
+    <tr><td>1.1</td><td>2026-10-10</td><td>改寫為企劃書／規格書結構：架構圖、前後台規格對照、線框、資料庫與欄位串接、時程。</td></tr>
+  </tbody>
+</table>
+
+<h2>目錄</h2>
+<ol>
+  <li><a href="#s0">文件怎麼用</a></li>
+  <li><a href="#s1">網站架構圖</a></li>
+  <li><a href="#s2">功能規格對照表</a></li>
+  <li><a href="#s3">線框圖</a></li>
+  <li><a href="#s4">技術與資料庫</a></li>
+  <li><a href="#s5">時程與驗收</a></li>
+  <li><a href="#s6">待確認與簽署</a></li>
+</ol>
+
+<h2 id="s0">0. 文件怎麼用</h2>
+<ol>
+  <li>第二章每一列都是一條可測試規格。列裡同時寫前台要看到什麼、資料庫要留下什麼、後台要對到哪一筆。</li>
+  <li>規格表沒有的功能，包含全站搜尋、收藏、購物車、會員儲值、簡訊、LINE 登入、真實刷卡與發票，都不在本期。</li>
+  <li>要追加功能，先改本文件版次並再確認，然後才排進時程。口頭追加不改變驗收範圍。</li>
+  <li>交件時逐列操作。前台結果與後台同一編號對得上，該列才算通過。靜態截圖不算通過。</li>
+</ol>
+<div class="note">本期沒有購物車。白包、紀念品、會員方案、平台服務都在當頁確認，確認當下寫成一筆訂單。未確認不產生訂單。</div>
+
+<h2 id="s1">1. 網站架構圖</h2>
+<p>前台給家屬、親友與留下諮詢的人。後台給業主。兩邊讀寫同一個資料庫。首頁可以進示範靈堂；其餘紀念頁只靠該頁自己的網址進入。本期不做公開搜尋列表。</p>
+<div class="cols">
+  <div>
+    <h3>1.1 前台</h3>
+    <ul class="tree">
+      <li><span class="box">平台入口</span>
+        <ul>
+          <li><span class="box">八步流程 <em>每步連到實際功能</em></span></li>
+          <li><span class="box">示範靈堂</span></li>
+        </ul>
+      </li>
+      <li><span class="box">會員空間 <em>以手機進入</em></span>
+        <ul>
+          <li><span class="box">建立／編輯紀念頁</span>
+            <ul>
+              <li><span class="box">上傳照片、影片</span></li>
+              <li><span class="box">複製邀請連結</span></li>
+              <li><span class="box">開通時光膠囊</span></li>
+              <li><span class="box">委製影片或相簿</span></li>
+            </ul>
+          </li>
+          <li><span class="box">我的紀念頁清單</span></li>
+        </ul>
+      </li>
+      <li><span class="box">線上靈堂 <em>/hall/邀請代碼</em></span>
+        <ul>
+          <li><span class="box">生平</span></li>
+          <li><span class="box">點燈、供花、祈福</span></li>
+          <li><span class="box">留言</span></li>
+          <li><span class="box">白包、紀念品</span></li>
+          <li><span class="box">相簿</span></li>
+          <li><span class="box">時光膠囊 <em>封存或已公開內容</em></span></li>
+        </ul>
+      </li>
+      <li><span class="box">活動諮詢</span></li>
+    </ul>
+  </div>
+  <div>
+    <h3>1.2 後台</h3>
+    <ul class="tree">
+      <li><span class="box">管理登入 <em>與家屬分開</em></span>
+        <ul>
+          <li><span class="box">營運總覽 <em>會員、紀念頁、互動、金額</em></span></li>
+          <li><span class="box">會員與紀念頁</span></li>
+          <li><span class="box">媒體審核 <em>公開／不公開</em></span></li>
+          <li><span class="box">留言管理 <em>改為不公開</em></span></li>
+          <li><span class="box">金流訂單</span></li>
+          <li><span class="box">委製交付</span></li>
+          <li><span class="box">諮詢名單 <em>改狀態</em></span></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>1.3 頁面與原型對照</h3>
+    <table>
+      <thead><tr><th>正式頁</th><th>原型</th></tr></thead>
+      <tbody>
+        <tr><td>平台入口</td><td>index2.html</td></tr>
+        <tr><td>會員空間、建立紀念頁</td><td>member.html、memorial-create.html</td></tr>
+        <tr><td>線上靈堂</td><td>memorial-view.html</td></tr>
+        <tr><td>膠囊與相簿</td><td>原型沒有，本期新增</td></tr>
+        <tr><td>活動諮詢</td><td>campaign.html</td></tr>
+        <tr><td>後台</td><td>admin.html。原型為同一瀏覽器暫存，本期改為登入後讀資料庫</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h3>1.4 角色能進哪裡</h3>
+<table>
+  <thead><tr><th>位置</th><th>家屬</th><th>親友（持該頁網址）</th><th>無網址訪客</th><th>業主</th></tr></thead>
+  <tbody>
+    <tr><td>會員空間、建檔、上傳、開通、委製</td><td>只限自己的資料</td><td>不可</td><td>不可</td><td>可查看，不代為付款或改生平</td></tr>
+    <tr><td>靈堂已公開內容、留言、儀式、白包、紀念品</td><td>可</td><td>可</td><td>不可</td><td>不代操作</td></tr>
+    <tr><td>未開通膠囊的影片與相簿</td><td>不可</td><td>不可</td><td>不可</td><td>只在審核區看原檔</td></tr>
+    <tr><td>已開通膠囊</td><td>可</td><td>可</td><td>不可</td><td>可查看</td></tr>
+    <tr><td>後台全部模組</td><td>不可</td><td>不可</td><td>不可</td><td>登入後可</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s2">2. 功能規格對照表</h2>
+<p>讀法：同一列從左到右必須同時成立。最右欄出現的情況，該列判失敗。金額單位皆為新台幣整數。</p>
+
+<h3>2.1 平台入口</h3>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">P-01</td><td>打開首頁，點六個入口</td><td>流程、會員、建檔、靈堂、後台、活動六頁都打開</td><td>不寫入業務資料</td><td>任一連結打不開，或連到空白頁</td></tr>
+    <tr><td class="id">P-02</td><td>點八步流程的每一步</td><td>進入對應的可操作頁，不是說明用的死圖</td><td>不寫入業務資料</td><td>步驟沒有對應功能</td></tr>
+    <tr><td class="id">P-03</td><td>未登入直接打開後台網址</td><td>只看到管理登入</td><td>不回傳會員、訂單、名單、媒體</td><td>未登入看得到任一筆資料</td></tr>
+    <tr><td class="id">P-04</td><td>把視窗縮到手機寬度，開關選單</td><td>選單可開可關，六個入口仍可點</td><td>不寫入業務資料</td><td>選單打不開或項目溢出無法點</td></tr>
+  </tbody>
+</table>
+
+<h3>2.2 會員</h3>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">M-01</td><td>填姓名、手機、信箱、關係後儲存</td><td>會員空間立刻顯示這四項</td><td>members 新增一筆；後台會員列表出現同一姓名與手機</td><td>畫面改了、資料庫沒有；或後台顯示不同姓名</td></tr>
+    <tr><td class="id">M-02</td><td>姓名或手機留白後儲存</td><td>停在原頁，指出缺的欄位</td><td>members 筆數不變</td><td>仍建立一筆空白會員</td></tr>
+    <tr><td class="id">M-03</td><td>再用同一支手機進入</td><td>看到原來的姓名與原來的紀念頁</td><td>members 不新增第二筆；工作階段綁原會員編號</td><td>同一手機變成兩位會員，或清單是空的</td></tr>
+    <tr><td class="id">M-04</td><td>用第二支手機建立另一人</td><td>第二人看不到第一人的紀念頁與訂單</td><td>兩筆 members，紀念頁的 member_id 各屬其人</td><td>任一邊看得到對方的資料</td></tr>
+    <tr><td class="id">M-05</td><td>打開我的紀念頁</td><td>列數等於此人實際頁數，每列進到正確靈堂</td><td>查詢條件為該 member_id</td><td>固定顯示一列示範，或連到別人的靈堂</td></tr>
+  </tbody>
+</table>
+
+<h3>2.3 紀念頁</h3>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">R-01</td><td>填逝者姓名、生卒年、標題、生平並儲存</td><td>清單多一列；靈堂顯示這四項</td><td>memorials 新增一筆，member_id 為目前家屬，capsule_status 為封存，並產生唯一 invite_code</td><td>沒有編號、沒有邀請代碼，或膠囊不是封存</td></tr>
+    <tr><td class="id">R-02</td><td>同一會員再建立第二位逝者</td><td>清單兩列，內容各看各的</td><td>兩筆 memorials。第一筆的留言、訂單、媒體、次數不變</td><td>第二筆蓋掉第一筆</td></tr>
+    <tr><td class="id">R-03</td><td>修改其中一筆生平並儲存</td><td>該靈堂改為新文字，另一筆不變</td><td>只更新該 memorials.id 的 story</td><td>兩筆生平變成同一段</td></tr>
+    <tr><td class="id">R-04</td><td>儲存後重新整理，關掉瀏覽器再打開</td><td>筆數與文字仍在</td><td>資料來自資料庫，不來自該瀏覽器暫存</td><td>重開後消失或變回舊示範文案</td></tr>
+    <tr><td class="id">R-05</td><td>姓名或生平留白</td><td>指出缺欄，不建立</td><td>memorials 筆數不變</td><td>產生姓名空白的紀念頁</td></tr>
+  </tbody>
+</table>
+
+<h3>2.4 照片與影片</h3>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">A-01</td><td>選定紀念頁，選圖片、填說明、送出</td><td>家屬清單出現該說明，狀態為待審核；靈堂沒有這張圖</td><td>media 一筆，kind=photo，source=self，status=待審核，檔案在 uploads；後台審核列同一編號</td><td>未審核已出現在靈堂，或後台找不到該編號</td></tr>
+    <tr><td class="id">A-02</td><td>改選影片送出</td><td>清單類型為影片，狀態待審核，靈堂不可播放</td><td>kind=video，其餘同 A-01</td><td>只存文字、沒有影片檔</td></tr>
+    <tr><td class="id">A-03</td><td>只填說明、不選檔</td><td>狀態為待補檔，靈堂與膠囊都沒有</td><td>status=待補檔，file_path 為空</td><td>被當成已上傳或已公開</td></tr>
+    <tr><td class="id">A-04</td><td>檔案超過上限或格式不允許</td><td>拒絕並說明原因</td><td>不新增 media，不留檔</td><td>仍出現一筆待審核</td></tr>
+    <tr><td class="id">A-05</td><td>對第二個紀念頁上傳</td><td>只出現在第二頁的清單</td><td>media.memorial_id 為第二頁</td><td>出現在林○○先生或其他頁</td></tr>
+    <tr><td class="id">A-06</td><td>查看待審核、待補檔、不公開</td><td>三者都不在靈堂照片牆、相簿、膠囊內容</td><td>狀態欄維持原值，紀錄不被刪除</td><td>任一未公開狀態被公開畫面讀出</td></tr>
+  </tbody>
+</table>
+<p class="small">上傳上限：圖片 jpg、png、webp，單檔 8MB。影片 mp4，單檔 80MB。</p>
+
+<h3>2.5 邀請</h3>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">I-01</td><td>打開某一紀念頁的邀請區</td><td>顯示含該頁 invite_code 的網址</td><td>代碼等於該 memorials.invite_code，全庫不重複</td><td>兩頁同一網址</td></tr>
+    <tr><td class="id">I-02</td><td>按複製</td><td>出現「已複製」；若瀏覽器不允許，改為選取網址並提示手動複製</td><td>不寫入資料</td><td>按了沒有任何回饋</td></tr>
+    <tr><td class="id">I-03</td><td>無痕視窗打開該網址</td><td>姓名、生平、次數、金額屬於這一頁</td><td>讀取條件為 invite_code</td><td>開到另一位逝者</td></tr>
+    <tr><td class="id">I-04</td><td>在邀請頁尋找編輯、審核、後台</td><td>沒有這些操作</td><td>該身分呼叫管理動作會被拒絕</td><td>親友改得到生平或看得到後台</td></tr>
+  </tbody>
+</table>
+
+<h3>2.6 靈堂互動</h3>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">H-01</td><td>按一次「點一盞心燈」</td><td>心燈加 1；留言牆多一則「點了一盞心燈」與時間</td><td>同一動作寫入 ritual_events（light）與 messages。後台互動數加 1。重新整理後數字仍在</td><td>只有畫面加 1，或另一頁被加到</td></tr>
+    <tr><td class="id">H-02</td><td>按一次供花</td><td>供花加 1，留言牆多一則</td><td>ritual_events 類型為 flower</td><td>同 H-01 的失敗情況</td></tr>
+    <tr><td class="id">H-03</td><td>按一次祈福</td><td>祈福加 1，留言牆多一則</td><td>ritual_events 類型為 prayer</td><td>同 H-01 的失敗情況</td></tr>
+    <tr><td class="id">H-04</td><td>填稱呼與內容後送出留言</td><td>牆上出現稱呼、內容、時間</td><td>messages 一筆，visibility=公開，kind=留言。後台看得到同一則</td><td>牆上有、後台沒有</td></tr>
+    <tr><td class="id">H-05</td><td>稱呼或內容留白</td><td>指出缺欄，牆上不新增</td><td>messages 筆數不變</td><td>送出空白留言</td></tr>
+    <tr><td class="id">H-06</td><td>在第二頁點燈後，回到第一頁</td><td>第一頁次數與留言維持操作前的值</td><td>新事件的 memorial_id 只有第二頁</td><td>兩頁數字一起變</td></tr>
+    <tr><td class="id">H-07</td><td>對照靈堂生平與建檔內容</td><td>姓名、生卒年、標題、生平一致</td><td>讀的是該筆 memorials，沒有第二份文案</td><td>靈堂仍是寫死的示範句</td></tr>
+  </tbody>
+</table>
+<p class="small">後台互動總數的算法只有一種：該頁 ritual_events 筆數，加上 kind=留言且未隱藏的 messages 筆數。儀式產生的留言不重複計入，避免點一次燈被算成兩次互動。</p>
+
+<h3>2.7 白包與紀念品</h3>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">F-01</td><td>填稱呼與白包金額，按確認</td><td>該頁累計立即加上該金額，並看到成功</td><td>orders 一筆：類型白包、金額相同、狀態已入帳、memorial_id 為當頁。後台金流同一編號</td><td>累計變了但後台沒有，或金額不同</td></tr>
+    <tr><td class="id">F-02</td><td>分別確認花禮、燈座、禮盒</td><td>累計依序加 300、600、1,200</td><td>三筆 orders，類型紀念品，項目與金額對應</td><td>三項寫成同一筆，或金額可被前端改掉</td></tr>
+    <tr><td class="id">F-03</td><td>只看品項，不按確認</td><td>累計不變</td><td>不新增 orders</td><td>出現未確認的訂單</td></tr>
+    <tr><td class="id">F-04</td><td>白包輸入 0、空白、小數，或大於 100,000</td><td>指出金額無效，累計不變</td><td>不新增 orders</td><td>任一無效值入帳</td></tr>
+    <tr><td class="id">F-05</td><td>把靈堂累計與後台該頁合計放在一起看</td><td>兩個數字相同</td><td>兩邊都是該頁狀態為已入帳的 amount 總和</td><td>各算各的</td></tr>
+    <tr><td class="id">F-06</td><td>在第二頁完成 F-01 後看第一頁</td><td>第一頁累計不變</td><td>新訂單只掛第二頁</td><td>全站金額混加</td></tr>
+  </tbody>
+</table>
+
+<h3>2.8 後台</h3>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">B-01</td><td>用管理帳號登入，再登出，再直接打開後台網址</td><td>登出後只剩登入頁</td><td>工作階段清除後，管理介面拒絕讀取</td><td>登出仍看得到訂單</td></tr>
+    <tr><td class="id">B-02</td><td>登入後看總覽</td><td>家屬不經過後台，無前台變化</td><td>會員數、紀念頁數等於資料表筆數；互動數用 2.6 的算法；金額用 2.7 的算法</td><td>總覽是另行輸入的數字</td></tr>
+    <tr><td class="id">B-03</td><td>打開會員與訂單明細</td><td>無</td><td>看得到會員手機、其所屬紀念頁、每筆訂單的時間、紀念頁、付款人、類型、項目、金額、狀態</td><td>明細少於前台已確認的筆數</td></tr>
+    <tr><td class="id">B-04</td><td>把待審核媒體改為已公開</td><td>該頁靈堂與相簿出現這一筆；膠囊若已開通也出現</td><td>該 media.status=已公開。其他紀念頁沒有這一筆</td><td>只改後台標籤，靈堂沒出現</td></tr>
+    <tr><td class="id">B-05</td><td>再改為不公開</td><td>靈堂、相簿、膠囊同時不再顯示</td><td>紀錄仍在，status=不公開。家屬清單仍看得到狀態</td><td>紀錄被刪除，或三個畫面有一個還看得到</td></tr>
+    <tr><td class="id">B-06</td><td>把一則留言改為不公開</td><td>該靈堂留言牆移除這一則，次數算法不再計入它</td><td>messages.visibility=不公開，資料列保留</td><td>留言被刪除，或牆上看得到</td></tr>
+    <tr><td class="id">B-07</td><td>把名單改為已聯繫或結案</td><td>活動頁同一筆顯示新狀態</td><td>只更新該 leads.id</td><td>兩邊狀態不同，或其他名單被改到</td></tr>
+    <tr><td class="id">B-08</td><td>對製作中的委製按「交付並公開」</td><td>該頁靈堂、相簿、已開通膠囊出現成品</td><td>同一動作把服務狀態改為已交付，並寫入一筆已公開 media，source=平台服務，order_id 指向該訂單</td><td>三個畫面只出現一處，或交付前就看得到</td></tr>
+  </tbody>
+</table>
+
+<h3>2.9 活動名單</h3>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">C-01</td><td>填姓名、聯絡方式、需求並送出</td><td>活動頁清單出現這一筆，狀態待聯繫</td><td>leads 一筆。後台名單同一編號、同一內容</td><td>只留在活動頁瀏覽器</td></tr>
+    <tr><td class="id">C-02</td><td>姓名或聯絡方式留白</td><td>指出缺欄</td><td>不新增 leads</td><td>建立空名單</td></tr>
+    <tr><td class="id">C-03</td><td>重新整理活動頁與後台</td><td>該筆仍在</td><td>讀取同一 leads.id</td><td>重開後消失</td></tr>
+    <tr><td class="id">C-04</td><td>閱讀活動頁的六個月內容規劃</td><td>可閱讀新聞、短影音、社群、活動、KOL、DM 的說明</td><td>這些數字不是資料表，後台不提供廣告成效</td><td>把說明數字做成可編輯的假報表</td></tr>
+  </tbody>
+</table>
+
+<h3>2.10 時光膠囊</h3>
+<p>資格掛在紀念頁。家屬為這一頁付費開通後，家屬與持該頁網址的親友可以打開。未開通時任何人看不到影片與相簿內容。</p>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">T-01</td><td>建立紀念頁後打開膠囊</td><td>看到封存說明與開通方案，沒有影片與相簿</td><td>capsule_status=封存。沒有會員方案訂單</td><td>新建頁可以直接看內容</td></tr>
+    <tr><td class="id">T-02</td><td>未開通時，親友打開同一頁膠囊</td><td>同樣只有封存說明</td><td>不讀出媒體檔</td><td>親友看得到未付費內容</td></tr>
+    <tr><td class="id">T-03</td><td>家屬確認開通</td><td>膠囊改為可開啟；該頁累計加上方案價格</td><td>同一交易寫入 orders（類型會員方案、已入帳）並把 capsule_status 改為可開啟。失敗則兩件事都不成立</td><td>未入帳卻已開通，或已扣帳仍封存</td></tr>
+    <tr><td class="id">T-04</td><td>開通後家屬與親友打開</td><td>看到該頁已公開的照片與影片</td><td>查詢 media：該 memorial_id 且 status=已公開</td><td>看到待審核檔，或看到別頁的檔</td></tr>
+    <tr><td class="id">T-05</td><td>開通後把其中一筆改不公開</td><td>膠囊與靈堂同時移除該筆</td><td>只改該 media.status</td><td>膠囊仍播放已下架檔案</td></tr>
+    <tr><td class="id">T-06</td><td>只開通第二頁</td><td>第一頁膠囊仍是封存</td><td>只有第二頁 capsule_status=可開啟</td><td>會員方案變成全站有效</td></tr>
+    <tr><td class="id">T-07</td><td>重新整理</td><td>已開通仍可開，未開通仍封存</td><td>狀態存在 memorials，不存在瀏覽器</td><td>重開後恢復封存或全部打開</td></tr>
+  </tbody>
+</table>
+
+<h3>2.11 自製與平台服務</h3>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">S-01</td><td>自製檔走完 A-01 與 B-04</td><td>已公開後出現在相簿；膠囊已開通時也出現</td><td>source=自製</td><td>自製與委製分成兩套互不相通的相簿</td></tr>
+    <tr><td class="id">S-02</td><td>選擇平台製作影片或相簿，但不確認</td><td>沒有成品</td><td>不新增 orders，不新增 media</td><td>尚未付款就有檔案</td></tr>
+    <tr><td class="id">S-03</td><td>確認委製</td><td>看到「製作中」。靈堂、相簿、膠囊都沒有成品</td><td>orders 類型平台服務、已入帳、服務狀態製作中。金額為價格表所定</td><td>確認後立即出現成品</td></tr>
+    <tr><td class="id">S-04</td><td>後台按交付並公開</td><td>靈堂、相簿、已開通膠囊三處同時可看</td><td>見 B-08。media.source=平台服務</td><td>三處不同步</td></tr>
+    <tr><td class="id">S-05</td><td>在後台依來源查看</td><td>無</td><td>可分開列出自製與平台服務</td><td>來源無法分辨</td></tr>
+  </tbody>
+</table>
+
+<h3>2.12 示範資料</h3>
+<table>
+  <thead><tr><th>編號</th><th>操作</th><th>前台結果</th><th>後台與資料結果</th><th>判失敗</th></tr></thead>
+  <tbody>
+    <tr><td class="id">D-01</td><td>第一次啟動空資料庫</td><td>可進入林小姐與林○○先生的示範靈堂</td><td>寫入一位會員、一頁紀念、既有留言、儀式次數、一筆燈座訂單、一筆待審核照片、一筆待聯繫名單</td><td>空庫無法演示</td></tr>
+    <tr><td class="id">D-02</td><td>做過驗收操作後重新啟動</td><td>驗收時新增的第二頁與訂單還在</td><td>示範資料只在資料庫為空時寫入一次</td><td>每次開啟都把資料改回最初示範</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s3">3. 線框圖</h2>
+<p>以下確認操作動線與區塊位置。線框不是視覺稿。色樣沿用原型的深褐、米白、金褐，於第 1 週骨架一併呈現，不另開一輪視覺探索。</p>
+
+<h3>WF-01 平台入口</h3>
+<div class="wf">
+  <div class="wf-h">頁首：標誌「人本」｜流程｜會員空間｜建立紀念頁｜線上靈堂｜後台｜活動</div>
+  <div class="wf-b tall">主標：線上祭祀平台<br>一句說明<br>按鈕：進入會員空間、查看示範靈堂</div>
+  <div class="wf-row c2">
+    <div class="wf-b tall">八步：01 註冊 → 08 後台。每步可點</div>
+    <div class="wf-b tall">三條說明：家屬要做的事、業主要看的事、活動名單。不放搜尋與收藏</div>
+  </div>
+</div>
+
+<h3>WF-02 會員空間</h3>
+<div class="wf">
+  <div class="wf-h">頁首同 WF-01</div>
+  <div class="wf-row c2">
+    <div class="wf-b tall">表單：姓名、手機、信箱、關係<br>按鈕：進入／儲存<br>錯誤文字出現在欄位下</div>
+    <div class="wf-b tall">目前會員：四個欄位的值<br>按鈕：建立紀念頁</div>
+  </div>
+  <div class="wf-b">我的紀念頁：姓名｜狀態｜邀請｜查看靈堂。沒有資料時顯示「尚未建立」，不顯示假的一列</div>
+</div>
+
+<h3>WF-03 建立紀念頁</h3>
+<div class="wf">
+  <div class="wf-h">頁首｜返回會員空間</div>
+  <div class="wf-row c2">
+    <div class="wf-b tall">表單：逝者姓名、生卒年、標題、生平<br>按鈕：儲存</div>
+    <div class="wf-b tall">這一頁的預覽：姓名、標題<br>儲存後才產生邀請連結與複製按鈕</div>
+  </div>
+  <div class="wf-row c2">
+    <div class="wf-b tall">上傳：說明、照片或影片、送出<br>下方清單：類型、名稱、狀態</div>
+    <div class="wf-b tall">開通膠囊：價格、確認按鈕、目前封存或已開通<br>委製：影片、相簿、各自確認、服務狀態</div>
+  </div>
+</div>
+
+<h3>WF-04 線上靈堂</h3>
+<div class="wf">
+  <div class="wf-h">頁首。親友這頁沒有「編輯」「後台」</div>
+  <div class="wf-b tall">逝者姓名、生卒年、標題</div>
+  <div class="wf-row c2">
+    <div class="wf-b tall">生平全文</div>
+    <div class="wf-b tall">點燈、供花、祈福三個按鈕<br>三個數字</div>
+  </div>
+  <div class="wf-row c2">
+    <div class="wf-b tall">留言列表<br>稱呼、內容、送出</div>
+    <div class="wf-b tall">白包：稱呼、金額、確認<br>三項紀念品與價格、各自確認<br>本頁累計金額</div>
+  </div>
+  <div class="wf-b">相簿：只排已公開。沒有時顯示「尚無已公開的照片或影片」</div>
+  <div class="wf-b">膠囊：封存時只有說明與「須由家屬開通」；已開通時為影片與相簿，資料與上方相簿同一批</div>
+</div>
+
+<h3>WF-05 活動諮詢</h3>
+<div class="wf">
+  <div class="wf-h">頁首</div>
+  <div class="wf-row c2">
+    <div class="wf-b tall">六個月規劃說明，僅供閱讀</div>
+    <div class="wf-b tall">表單：姓名、聯絡方式、需求、送出<br>名單：姓名、聯絡方式、需求、狀態</div>
+  </div>
+</div>
+
+<h3>WF-06 後台</h3>
+<div class="wf">
+  <div class="wf-h">登入前只有帳號、密碼、進入</div>
+  <div class="wf-b">登入後：總覽四個數字（會員、紀念頁、互動、已入帳金額）</div>
+  <div class="wf-row c2">
+    <div class="wf-b tall">會員與紀念頁表<br>媒體表：編號、紀念頁、來源、狀態、改為公開、改為不公開</div>
+    <div class="wf-b tall">留言表：改為不公開<br>訂單表<br>委製：交付並公開<br>名單：改狀態</div>
+  </div>
+</div>
+<p class="small">動線：家屬由 WF-02 到 WF-03，再把連結交給親友進入 WF-04。業主只走 WF-06。親友不能從 WF-04 走到 WF-03 或 WF-06。</p>
+
+<h2 id="s4">4. 技術與資料庫</h2>
+<h3>4.1 技術選定</h3>
+<table>
+  <thead><tr><th>層</th><th>選定</th><th>原因</th></tr></thead>
+  <tbody>
+    <tr><td>畫面</td><td>伺服器產生的 HTML、CSS，加上少量原生 JavaScript</td><td>表單送出、審核、入帳都由伺服器完成。不把唯一的資料放在瀏覽器</td></tr>
+    <tr><td>後端</td><td>Node.js 20 與 Express</td><td>同一個程式服務前台與後台</td></tr>
+    <tr><td>資料庫</td><td>SQLite 單一檔，放在專案內</td><td>第一期在本機驗收，不另裝資料庫伺服器</td></tr>
+    <tr><td>檔案</td><td>專案內 uploads 目錄。資料庫只存路徑與狀態</td><td>審核改的是狀態，不必搬檔</td></tr>
+    <tr><td>管理密碼</td><td>只存雜湊值。密碼放本機設定，不寫進網頁與這份文件</td><td>文件外流不會帶出密碼</td></tr>
+    <tr><td>運行位置</td><td>委託端 Windows 本機</td><td>第一期驗收環境。改放正式主機另計部署，不在本章時程</td></tr>
+  </tbody>
+</table>
+<p>前置：本機需安裝 Node.js 20 LTS。開發方於第 1 週開始前確認可執行。</p>
+
+<h3>4.2 資料表</h3>
+<table>
+  <thead><tr><th>資料表</th><th>欄位</th><th>鍵與約束</th></tr></thead>
+  <tbody>
+    <tr><td>members</td><td>id、name、phone、email、relation、created_at</td><td>id 主鍵。phone 唯一、必填。name 必填</td></tr>
+    <tr><td>memorials</td><td>id、member_id、deceased_name、years、title、story、invite_code、capsule_status、created_at</td><td>member_id 參考 members。invite_code 唯一。capsule_status 只允許封存、可開啟。姓名與生平必填</td></tr>
+    <tr><td>media</td><td>id、memorial_id、kind、source、caption、file_path、status、order_id、created_at</td><td>kind：photo、video。source：self、platform。status：待補檔、待審核、已公開、不公開。order_id 可空，委製成品才填</td></tr>
+    <tr><td>ritual_events</td><td>id、memorial_id、type、created_at</td><td>type：light、flower、prayer。點燈數即此表該類型筆數</td></tr>
+    <tr><td>messages</td><td>id、memorial_id、author、body、kind、visibility、created_at</td><td>kind：ritual、note。visibility：公開、不公開。儀式留言與留言牆留言都在此表</td></tr>
+    <tr><td>orders</td><td>id、memorial_id、payer_name、category、item_label、amount、status、service_status、created_at</td><td>category：envelope、souvenir、membership、service。status 本期只有已入帳。service_status 僅 service 使用：製作中、已交付</td></tr>
+    <tr><td>leads</td><td>id、name、contact、need、status、created_at</td><td>status：待聯繫、已聯繫、結案。姓名與聯絡方式必填</td></tr>
+    <tr><td>admin_users</td><td>id、username、password_hash</td><td>與 members 分開</td></tr>
+    <tr><td>sessions</td><td>id、subject_type、subject_id、token、expires_at</td><td>subject_type：member、admin</td></tr>
+  </tbody>
+</table>
+<p>關聯：一位會員對多個紀念頁。一個紀念頁對多筆媒體、儀式、留言、訂單。一筆平台訂單對零或一筆成品媒體。諮詢名單不掛紀念頁。刪除不作實體刪除；媒體與留言以狀態隱藏。</p>
+
+<h3>4.3 前台欄位如何進資料庫、後台從哪裡讀</h3>
+<table>
+  <thead><tr><th>前台欄位</th><th>寫入</th><th>後台所讀</th></tr></thead>
+  <tbody>
+    <tr><td>家屬姓名、手機、信箱、關係</td><td>members 同名欄位</td><td>會員與紀念頁</td></tr>
+    <tr><td>逝者姓名、生卒年、標題、生平</td><td>memorials.deceased_name、years、title、story</td><td>會員與紀念頁；靈堂讀同一列</td></tr>
+    <tr><td>上傳說明、檔案</td><td>media.caption、file_path、kind、status</td><td>媒體審核</td></tr>
+    <tr><td>留言稱呼、內容</td><td>messages.author、body，kind=note</td><td>留言管理</td></tr>
+    <tr><td>點燈、供花、祈福</td><td>ritual_events 一筆，messages 一筆 kind=ritual</td><td>總覽互動數、留言管理</td></tr>
+    <tr><td>白包稱呼、金額</td><td>orders.payer_name、amount，category=envelope</td><td>金流訂單</td></tr>
+    <tr><td>三項紀念品</td><td>orders.item_label、amount，category=souvenir。金額由伺服器價格表寫入，不採用瀏覽器自改的數字</td><td>金流訂單</td></tr>
+    <tr><td>開通膠囊</td><td>orders category=membership，並更新 memorials.capsule_status</td><td>金流訂單、紀念頁狀態</td></tr>
+    <tr><td>委製影片或相簿</td><td>orders category=service、service_status=製作中</td><td>委製交付。交付時才寫 media</td></tr>
+    <tr><td>諮詢姓名、聯絡方式、需求</td><td>leads 三欄，status=待聯繫</td><td>諮詢名單</td></tr>
+  </tbody>
+</table>
+
+<h3>4.4 伺服器動作</h3>
+<p>下列動作都檢查身分與紀念頁歸屬。不符則拒絕，資料表不變。</p>
+<table>
+  <thead><tr><th>動作</th><th>誰可以</th><th>成功時寫入</th></tr></thead>
+  <tbody>
+    <tr><td>建立或返回會員</td><td>持該手機的人</td><td>members 或 sessions</td></tr>
+    <tr><td>建立、修改紀念頁</td><td>該頁所屬家屬</td><td>memorials</td></tr>
+    <tr><td>上傳</td><td>該頁所屬家屬</td><td>media 與檔案</td></tr>
+    <tr><td>儀式、留言、白包、紀念品</td><td>能打開該邀請網址的人</td><td>ritual_events、messages、orders</td></tr>
+    <tr><td>開通、委製確認</td><td>該頁所屬家屬</td><td>orders；開通另改 capsule_status</td></tr>
+    <tr><td>審核、隱藏留言、交付、改名單</td><td>已登入業主</td><td>media.status、messages.visibility、orders.service_status、leads.status</td></tr>
+  </tbody>
+</table>
+
+<h3>4.5 價格表</h3>
+<p>紀念品價格沿用原型。其餘是驗收預設價。正式售價若在開工前書面指定，只改伺服器價格表，規格編號與流程不變。瀏覽器不能決定固定商品的金額。</p>
+<table>
+  <thead><tr><th>類型</th><th>項目</th><th>價格</th><th>性質</th></tr></thead>
+  <tbody>
+    <tr><td>白包</td><td>自填</td><td>1 至 100,000 的整數</td><td>規則</td></tr>
+    <tr><td>紀念品</td><td>追思花禮、祈福燈座、紀念禮盒</td><td>300、600、1,200</td><td>沿用原型</td></tr>
+    <tr><td>會員方案</td><td>開啟該頁膠囊</td><td>3,000</td><td>驗收預設</td></tr>
+    <tr><td>平台服務</td><td>製作影片、製作相簿</td><td>8,000、4,000</td><td>驗收預設</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s5">5. 時程與驗收</h2>
+<p>下表自本文件確認日的下一個工作日起算，共六週。每一週結束以該週規格編號演示。上一週有失敗列，不開始下一週的新編號。</p>
+<div class="gantt">
+  <div></div><div class="gh">第1週</div><div class="gh">第2週</div><div class="gh">第3週</div><div class="gh">第4週</div><div class="gh">第5週</div><div class="gh">第6週</div>
+  <div>入口、會員、紀念頁</div><div class="bar w1"></div>
+  <div>上傳、邀請</div><div class="bar w2"></div>
+  <div>靈堂互動、白包與紀念品</div><div class="bar w3"></div>
+  <div>後台、活動名單</div><div class="bar w4"></div>
+  <div>膠囊、自製與委製</div><div class="bar w5"></div>
+  <div>整站對帳與修正</div><div class="bar w6"></div>
+</div>
+<table>
+  <thead><tr><th>週次</th><th>完成的規格</th><th>該週結束時可演示</th></tr></thead>
+  <tbody>
+    <tr><td>第1週</td><td>P-01～P-04、M-01～M-04、R-01～R-05、M-05、D-01、D-02</td><td>兩位會員、兩筆紀念頁，重開瀏覽器仍在，且互不覆蓋。後台未登入無資料。</td></tr>
+    <tr><td>第2週</td><td>A-01～A-06、I-01～I-04</td><td>上傳後靈堂看不到；兩條邀請網址各開各的人。</td></tr>
+    <tr><td>第3週</td><td>H-01～H-07、F-01～F-06</td><td>點燈與白包只改當頁。靈堂累計已能從訂單算出。中期演示停在這裡。</td></tr>
+    <tr><td>第4週</td><td>B-01～B-07、C-01～C-04</td><td>公開與不公開會改變靈堂。名單兩邊同一筆。</td></tr>
+    <tr><td>第5週</td><td>T-01～T-07、S-01～S-05、B-08</td><td>未付款打不開膠囊。委製交付前無成品，交付後三處同時出現。</td></tr>
+    <tr><td>第6週</td><td>第二章全部列再測一次</td><td>整站腳本通過。失敗列修正後才算第一期完成。</td></tr>
+  </tbody>
+</table>
+
+<h3>5.1 驗收通過的定義</h3>
+<ul>
+  <li>第二章每一列都實際操作過，前台結果、資料結果、失敗條件都符合。</li>
+  <li>第 4.3 節每一列欄位，改前台後後台看得到同一筆。</li>
+  <li>沒有規格表以外的半成品按鈕。</li>
+</ul>
+
+<h3>5.2 第 6 週整站腳本</h3>
+<ol>
+  <li>兩位會員各自進入，看不到對方的紀念頁。</li>
+  <li>其中一位名下保留林○○先生，並新建第二位逝者。</li>
+  <li>第二位上傳照片。靈堂先沒有；後台改公開後才有。</li>
+  <li>無痕視窗打開第二位網址，留言、點燈、白包 500。</li>
+  <li>林○○先生的次數與金額不變。</li>
+  <li>後台該頁互動數與金額，等於靈堂上的數字。</li>
+  <li>活動頁新增名單，後台改為已聯繫，活動頁同一筆變成已聯繫。</li>
+  <li>未開通膠囊看不到內容。開通後看得到已公開媒體。再改不公開，膠囊內該筆消失。</li>
+  <li>委製確認後沒有成品。交付並公開後，靈堂、相簿、膠囊同時有。</li>
+  <li>關閉瀏覽器再打開，以上仍在。</li>
+</ol>
+<p>款項與契約條件不寫在本規格書，由雙方契約另訂。本文件只定義什麼叫做這一項做完。</p>
+
+<h2 id="s6">6. 待確認與簽署</h2>
+<table>
+  <thead><tr><th>項次</th><th>本規格採用</th><th>若要改</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>家屬為該紀念頁付費後，持網址的親友可看膠囊</td><td>先改 2.10，再重排第 5 週</td></tr>
+    <tr><td>2</td><td>會員方案 3,000、平台影片 8,000、平台相簿 4,000</td><td>開工前給正式售價，只改價格表</td></tr>
+    <tr><td>3</td><td>驗收在本機，資料庫在專案內</td><td>正式主機另列部署規格</td></tr>
+    <tr><td>4</td><td>時程六週，自確認後的下一個工作日起算</td><td>確認時改起始日，週次內容不變</td></tr>
+  </tbody>
+</table>
+<p>以上四項若未另書面指定，確認即表示同意。</p>
+<table class="sig">
+  <thead><tr><th>委託端確認</th><th>開發方確認</th></tr></thead>
+  <tbody>
+    <tr><td>簽名：<br><br>日期：</td><td>簽名：<br><br>日期：</td></tr>
+  </tbody>
+</table>
+<p class="small">HL-MEM-P1-20261010　版本 1.1　2026 年 10 月 10 日。線框確認動線，不作為最終視覺稿。</p>
+
+</main>
+</body>
+</html>
