@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>時光仙境｜線上靈堂</title>
+  <style>
+    :root {
+      --ink: #2f2922;
+      --muted: #6d6256;
+      --paper: #f7f1e8;
+      --line: rgba(47, 41, 34, 0.14);
+      --accent: #5c4a36;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Noto Serif TC", "Songti TC", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.7), transparent 40%),
+        linear-gradient(160deg, #efe4d4 0%, #f7f1e8 45%, #e8dccb 100%);
+    }
+    main {
+      width: min(720px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 12vh 0 64px;
+    }
+    p.eyebrow {
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 0 12px;
+    }
+    h1 {
+      font-weight: 600;
+      font-size: clamp(36px, 7vw, 56px);
+      line-height: 1.15;
+      margin: 0 0 18px;
+    }
+    .lede {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0 0 28px;
+    }
+    .card {
+      background: rgba(255, 252, 247, 0.78);
+      border: 1px solid var(--line);
+      padding: 22px 24px;
+      margin: 0 0 18px;
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+    .card p, .card li {
+      margin: 0;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+    .card ol {
+      margin: 10px 0 0;
+      padding-left: 1.2em;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    a.btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 12px 18px;
+      border: 1px solid var(--accent);
+      color: #fff;
+      background: var(--accent);
+    }
+    a.btn.line {
+      color: var(--accent);
+      background: transparent;
+    }
+    code {
+      font-family: Consolas, monospace;
+      font-size: 0.95em;
+      background: rgba(47, 41, 34, 0.06);
+      padding: 0.1em 0.35em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">時光仙境</p>
+    <h1>線上靈堂專案說明</h1>
+    <p class="lede">這個 GitHub Pages 只能放靜態說明頁。完整的會員、靈堂、時光膠囊系統是 Node.js 網站，需要在伺服器上啟動，無法直接靠 GitHub Pages 運作。</p>
+
+    <section class="card">
+      <h2>為什麼會看到 404？</h2>
+      <p>GitHub Pages 不會執行 <code>node src/server.js</code>，也不支援 SQLite、登入與上傳。倉庫裡原本沒有首頁 HTML，所以網址會顯示找不到檔案。</p>
+    </section>
+
+    <section class="card">
+      <h2>本機啟動</h2>
+      <ol>
+        <li>安裝 Node.js</li>
+        <li>在專案資料夾執行 <code>npm install</code></li>
+        <li>再執行 <code>npm start</code></li>
+        <li>開啟 <code>http://127.0.0.1:3000</code></li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>若要給別人線上使用</h2>
+      <p>需要部署到支援 Node.js 的主機，例如 Railway、Render、Fly.io 或自有 VPS。需要的話可以再幫你接上線部署。</p>
+    </section>
+
+    <div class="actions">
+      <a class="btn" href="https://github.com/akirafudo0515/humanlife-memorial">查看程式碼</a>
+      <a class="btn line" href="https://github.com/akirafudo0515/humanlife-memorial#readme">GitHub 倉庫</a>
+    </div>
+  </main>
+</body>
+</html>
