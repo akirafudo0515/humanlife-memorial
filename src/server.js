@@ -10,6 +10,7 @@ const plans = require('./plans');
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
+const host = process.env.HOST || '0.0.0.0';
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -1415,6 +1416,6 @@ app.use((req, res) => {
   page(res, view.missing(req.settings), 404);
 });
 
-app.listen(port, '127.0.0.1', () => {
-  console.log(`http://127.0.0.1:${port}`);
+app.listen(port, host, () => {
+  console.log(`http://${host}:${port}`);
 });

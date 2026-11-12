@@ -1,0 +1,40 @@
+# Optional GCP path: build and deploy to Cloud Run.
+# Requires a billing-enabled project. Prefer Render Free for $0 without GCP billing.
+# Usage example:
+#   gcloud builds submit --config cloudbuild.yaml --substitutions=_REGION=asia-east1
+
+substitutions:
+  _REGION: asia-east1
+  _SERVICE: humanlife-memorial
+  _REPO: apps
+
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$COMMIT_SHA
+      - .
+
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$COMMIT_SHA
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE}
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$COMMIT_SHA
+      - --region=${_REGION}
+      - --allow-unauthenticated
+      - --port=3000
+      - --memory=512Mi
+      - --cpu=1
+      - --min-instances=0
+      - --max-instances=2
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$COMMIT_SHA
