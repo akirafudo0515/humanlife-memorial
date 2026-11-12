@@ -253,10 +253,12 @@ db.exec(`
     capsule_id TEXT NOT NULL REFERENCES capsules(id),
     member_id TEXT NOT NULL REFERENCES members(id),
     created_at TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'allowed',
     PRIMARY KEY (capsule_id, member_id)
   );
 `);
 
+// Older DBs created capsule_shares without status; alter only after the table exists.
 const shareColumns = db.prepare(`PRAGMA table_info(capsule_shares)`).all().map((column) => column.name);
 if (!shareColumns.includes('status')) {
   db.exec(`ALTER TABLE capsule_shares ADD COLUMN status TEXT NOT NULL DEFAULT 'allowed'`);
