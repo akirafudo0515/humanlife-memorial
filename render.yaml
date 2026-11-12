@@ -1,0 +1,14 @@
+# Free public path: Render Blueprint (optional).
+# Create a Free Web Service from this repo in the Render dashboard if you prefer the UI.
+services:
+  - type: web
+    name: humanlife-memorial
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: HOST
+        value: "0.0.0.0"

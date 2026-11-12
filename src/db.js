@@ -167,11 +167,6 @@ const messageColumns = db.prepare(`PRAGMA table_info(messages)`).all().map((colu
 if (!messageColumns.includes('parent_id')) db.exec(`ALTER TABLE messages ADD COLUMN parent_id TEXT`);
 if (!messageColumns.includes('member_id')) db.exec(`ALTER TABLE messages ADD COLUMN member_id TEXT`);
 
-const shareColumns = db.prepare(`PRAGMA table_info(capsule_shares)`).all().map((column) => column.name);
-if (!shareColumns.includes('status')) {
-  db.exec(`ALTER TABLE capsule_shares ADD COLUMN status TEXT NOT NULL DEFAULT 'allowed'`);
-}
-
 const memberColumns = db.prepare(`PRAGMA table_info(members)`).all().map((column) => column.name);
 ['email_verified', 'phone_verified'].forEach((column) => {
   if (!memberColumns.includes(column)) db.exec(`ALTER TABLE members ADD COLUMN ${column} INTEGER NOT NULL DEFAULT 0`);
@@ -258,8 +253,18 @@ db.exec(`
     capsule_id TEXT NOT NULL REFERENCES capsules(id),
     member_id TEXT NOT NULL REFERENCES members(id),
     created_at TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'allowed',
     PRIMARY KEY (capsule_id, member_id)
   );
+`);
+
+// Older DBs created capsule_shares without status; alter only after the table exists.
+const shareColumns = db.prepare(`PRAGMA table_info(capsule_shares)`).all().map((column) => column.name);
+if (!shareColumns.includes('status')) {
+  db.exec(`ALTER TABLE capsule_shares ADD COLUMN status TEXT NOT NULL DEFAULT 'allowed'`);
+}
+
+db.exec(`
   CREATE TABLE IF NOT EXISTS member_notices (
     id TEXT PRIMARY KEY,
     member_id TEXT NOT NULL REFERENCES members(id),
